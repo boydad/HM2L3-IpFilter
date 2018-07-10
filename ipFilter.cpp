@@ -43,9 +43,9 @@ IpPool loadIpPool(std::istream& is){
 
 auto cmpIp = [](const std::vector<std::string>& ip1, const std::vector<std::string>& ip2) -> bool {
 	for (int i = 0; i < 4; ++i) {
-		if (ip1[i] > ip2[i])
+		if (std::stoi(ip1[i]) > std::stoi(ip2[i]))
 			return true;
-		if (ip1[i] < ip2[i])
+		if (std::stoi(ip1[i]) < std::stoi(ip2[i]))
 			return false;
 	}
 	return true;
