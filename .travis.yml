@@ -1,6 +1,4 @@
 language: cpp
-before_script:
-  - sudo apt-get install libboost-test-dev -y
 script:
   - cmake .
   - cmake --build .
@@ -11,4 +9,4 @@ deploy:
   provider: script
   skip_cleanup: true
   script:
-  - '! curl -T ipfilter-${_PROJECT_VERSION}-Linux.deb -uboydad:$BINTRAY_API_KEY "https://api.bintray.com/content/boydad/otus-cpp/1-helloWorld/${_PROJECT_VERSION}/ipfilter-${_PROJECT_VERSION}-Linux.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1" | grep -v success'
+  - '! curl -T ipfilter-${_PROJECT_VERSION}-Linux.deb -uboydad:$BINTRAY_API_KEY "https://api.bintray.com/content/boydad/otus-cpp/3-ipfilter/${_PROJECT_VERSION}/ipfilter/ipfilter-${_PROJECT_VERSION}-Linux.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1" | grep -v success'
