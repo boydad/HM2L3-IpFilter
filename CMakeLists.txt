@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(helloworld)
+project(ipfilter)
 
 #==============================
 # work with version determination...
@@ -25,9 +25,9 @@ set(version_file "${CMAKE_CURRENT_BINARY_DIR}/version.cpp")
 # end version part
 
 
-add_executable(ipFilter ${CMAKE_CURRENT_SOURCE_DIR}/ipFilter.cpp )
+add_executable(ipfilter ${CMAKE_CURRENT_SOURCE_DIR}/ipFilter.cpp )
 
-set_target_properties(ipFilter PROPERTIES
+set_target_properties(ipfilter PROPERTIES
   CXX_STANDARD 14
   CXX_STANDARD_REQUIRED ON
   COMPILE_OPTIONS -Wpedantic -Wall -Wextra
@@ -35,7 +35,7 @@ set_target_properties(ipFilter PROPERTIES
 
 
 
-install(TARGETS ipFilter DESTINATION bin)
+install(TARGETS ipfilter DESTINATION bin)
 
 set(CPACK_GENERATOR DEB)
 set(CPACK_PACKAGE_VERSION ${VERSION_SHORT})
