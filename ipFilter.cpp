@@ -58,7 +58,7 @@ std::ostream& operator<<(std::ostream& os, const Ip& ip){
 		std::cout << *ip_part;
 	}
 	return os;
-};
+}
 
 template< typename L>
 IpPool filter(const IpPool& ipPool, L condition){
@@ -67,7 +67,7 @@ IpPool filter(const IpPool& ipPool, L condition){
 		if (condition(*ip))
 			ipFilt.push_back(*ip);
 	return std::move(ipFilt);
-};
+}
 
 auto fByOne = [](const Ip& ip)->bool{
 														return ip.at(0) == std::string("1");
