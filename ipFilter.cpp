@@ -29,16 +29,25 @@ std::vector<std::string> split(const std::string &str, char d) {
 	return r;
 }
 
-using Ip = std::vector<std::string>;
+using Ip = std::vector<int>;
 using IpPool = std::vector<Ip>;
 
 IpPool loadIpPool(std::istream& is){
-	IpPool ipPool;
-	for (std::string line; std::getline(is, line);) {
-		std::vector<std::string> v = split(line, '\t');
-		ipPool.emplace_back(split(v.at(0), '.'));
+	try{
+		IpPool ipPool;
+		for (std::string line; std::getline(is, line);) {
+			std::vector<std::string> v = split(line, '\t');
+			Ip ip;
+			ip.reserve(4);
+			for(auto&& ipPart: split(v.at(0), '.'))
+				ip.emplace_back(stoi(ipPart));
+			ipPool.emplace_back(ip);
+		}
+		return ipPool;
+	}catch (const std::exception &e) {
+		std::cerr << "Error in loading ip pool!\n:" << e.what() << std::endl;
+		throw e;
 	}
-	return ipPool;
 }
 
 std::ostream& operator<<(std::ostream& os, const Ip& ip){
@@ -69,11 +78,11 @@ int main(int argc, char const *argv[]) {
 	try {
 		IpPool ipPool = loadIpPool(std::cin);
 		
-		auto cmpIp = [](const std::vector<std::string>& ip1, const std::vector<std::string>& ip2) -> bool {
+		auto cmpIp = [](const Ip& ip1, const Ip& ip2) -> bool {
 										for (int i = 0; i < 4; ++i) {
-											if(std::stoi(ip1[i]) == std::stoi(ip2[i]))
+											if(ip1[i] == ip2[i])
 												continue;
-											return std::stoi(ip1[i]) > std::stoi(ip2[i]);
+											return ip1[i] > ip2[i];
 										}
 										return true;
 									};									
@@ -81,19 +90,19 @@ int main(int argc, char const *argv[]) {
 		std::cout<< ipPool;
 
 		auto fByOne = [](const Ip& ip)->bool{
-													return ip.at(0) == std::string("1");};
+													return ip.at(0) == 1;};
 		std::cout<< filter(ipPool, fByOne);			
 
 
 		auto fByTwo = [](const Ip& ip)->bool{
-												return ip.at(0) == std::string("46")  
-															 and ip.at(1) == std::string("70");};											
+												return ip.at(0) == 46  
+															 and ip.at(1) == 70;};											
 		std::cout<< filter(ipPool,fByTwo);			
 
 
 		auto fByAny = [](const Ip& ip)->bool{
 										for(int i=0; i<4; ++i)
-											if(ip.at(i) == std::string("46"))
+											if(ip.at(i) == 46)
 												return true;
 										return false;
 									};
