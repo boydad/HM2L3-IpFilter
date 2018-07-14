@@ -23,11 +23,14 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/version.cpp.in
 set(version_file "${CMAKE_CURRENT_BINARY_DIR}/version.cpp")
 #================================
 # end version part
-
+find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
 add_executable(ipfilter ${CMAKE_CURRENT_SOURCE_DIR}/ipFilter.cpp )
+add_executable(constexpr ${CMAKE_CURRENT_SOURCE_DIR}/constexpr.cpp )
 
-set_target_properties(ipfilter PROPERTIES
+target_link_libraries(constexpr ${Boost_LIBRARIES})
+
+set_target_properties(ipfilter constexpr PROPERTIES
   CXX_STANDARD 14
   CXX_STANDARD_REQUIRED ON
   COMPILE_OPTIONS -Wpedantic -Wall -Wextra
